@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emily Hur</title>
+  <meta name="description" content="Personal website of Emily Hur.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="#top" class="logo">Emily Hur.</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero container">
+      <p class="eyebrow">Hello, I'm</p>
+      <h1>Emily Hur</h1>
+      <p class="lead">
+        I'm a Computer Science and Mathematics major at Cornell University 
+        with a passion for full-stack development and robotics!
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">See my work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section container">
+      <h2>About</h2>
+      <div class="about-grid">
+        <div class="avatar" aria-hidden="true">Emily Hur</div>
+        <div>
+          <p>
+            Write a few sentences about yourself here. Where you're based, what you're
+            working on, and what brings you joy outside of work.
+          </p>
+          <p>
+            Add a second paragraph with a bit more detail — your background, your
+            interests, or what you're currently learning.
+          </p>
+          <ul class="tags">
+            <li>Skill one</li>
+            <li>Skill two</li>
+            <li>Skill three</li>
+            <li>Skill four</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section container">
+      <h2>Projects</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Project One</h3>
+          <p>A one- or two-sentence description of the project and what problem it solves.</p>
+          <a href="#" class="card-link">View project →</a>
+        </article>
+        <article class="card">
+          <h3>Project Two</h3>
+          <p>A one- or two-sentence description of the project and what problem it solves.</p>
+          <a href="#" class="card-link">View project →</a>
+        </article>
+        <article class="card">
+          <h3>Project Three</h3>
+          <p>A one- or two-sentence description of the project and what problem it solves.</p>
+          <a href="#" class="card-link">View project →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section container">
+      <h2>Experience</h2>
+      <ol class="timeline">
+        <li>
+          <span class="when">2024 — Present</span>
+          <h3>Role Title · Company</h3>
+          <p>A brief summary of what you do and the impact you've had.</p>
+        </li>
+        <li>
+          <span class="when">2022 — 2024</span>
+          <h3>Role Title · Company</h3>
+          <p>A brief summary of what you did and the impact you had.</p>
+        </li>
+        <li>
+          <span class="when">2018 — 2022</span>
+          <h3>Degree · University</h3>
+          <p>Focus areas, honors, or anything worth highlighting.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section container contact">
+      <h2>Let's connect</h2>
+      <p>I'm always happy to chat. The best way to reach me is by email.</p>
+      <a href="mailto:ejyhur@gmail.com" class="btn btn-primary">ejyhur@gmail.com</a>
+      <ul class="socials">
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <p>© <span id="year"></span> Emily Hur</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
