@@ -1,35 +1,24 @@
 /* ---------- Theme ---------- */
 :root {
-  --bg: #f4f8fb;
-  --bg-soft: #e8f0f7;
-  --surface: #ffffff;
-  --text: #1f3347;
-  --text-muted: #5b7187;
-  --accent: #4a7fa7;
-  --accent-strong: #2f6690;
-  --accent-soft: #d6e6f2;
-  --border: #d9e4ee;
-  --shadow: 0 10px 30px -12px rgba(47, 102, 144, 0.25);
+  color-scheme: dark;
+  --bg: #0f1a24;
+  --bg-soft: #142331;
+  --surface: #172838;
+  --text: #e3edf5;
+  --text-muted: #9ab0c3;
+  --accent: #7fb3d9;
+  --accent-strong: #a6cbe6;
+  --accent-soft: #1e3a52;
+  --border: #243a4e;
+  --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.5);
+  --silver: #d9dee5;
+  --silver-edge: #8e98a5;
+  --crayon: #c3cad3;
 
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "Futura", Georgia, serif;
   --radius: 14px;
   --max-width: 880px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1a24;
-    --bg-soft: #142331;
-    --surface: #172838;
-    --text: #e3edf5;
-    --text-muted: #9ab0c3;
-    --accent: #7fb3d9;
-    --accent-strong: #a6cbe6;
-    --accent-soft: #1e3a52;
-    --border: #243a4e;
-    --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.5);
-  }
 }
 
 /* ---------- Base ---------- */
@@ -81,6 +70,12 @@ a:hover {
   padding: 0 24px;
 }
 
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
 /* ---------- Header ---------- */
 .site-header {
   position: sticky;
@@ -99,11 +94,18 @@ a:hover {
   height: 64px;
 }
 
-.logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--text);
+.moon-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.moon-logo .phase {
+  transition: transform 0.3s ease;
+}
+
+.moon-logo:hover .phase {
+  transform: rotate(-20deg);
 }
 
 .nav-links {
@@ -126,8 +128,51 @@ a:hover {
 
 /* ---------- Hero ---------- */
 .hero {
-  padding-top: 120px;
+  position: relative;
+  overflow: hidden;
+  padding-top: 48px;
   padding-bottom: 80px;
+}
+
+/* Photo on the left, name and intro on the right */
+.hero-inner {
+  --photo-h: clamp(420px, 70vh, 620px);
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero-photo {
+  position: relative;
+  z-index: 1;
+  height: var(--photo-h);
+  width: auto;
+  /* Let the jeans fade into the page instead of ending on a hard edge */
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent);
+  filter: drop-shadow(0 18px 30px rgba(31, 51, 71, 0.18));
+}
+
+.hero-text {
+  margin-left: 32px;
+}
+
+.hero .hero-text h1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 24px;
+  font-size: clamp(4rem, 12.5vw, 12.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--accent-strong);
+  /* Serif side bearing leaves a sliver of space; pull back so letters line up with the lead */
+  margin-left: -0.04em;
 }
 
 .eyebrow {
@@ -137,11 +182,6 @@ a:hover {
   text-transform: uppercase;
   font-size: 0.85rem;
   margin: 0 0 8px;
-}
-
-.hero h1 {
-  font-size: clamp(2.8rem, 8vw, 4.5rem);
-  letter-spacing: -0.02em;
 }
 
 .lead {
@@ -220,16 +260,75 @@ a:hover {
 }
 
 .avatar {
+  position: relative;
   width: 160px;
   height: 160px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  color: var(--accent-strong);
-  background: linear-gradient(135deg, var(--accent-soft), var(--bg-soft));
-  border: 1px solid var(--border);
+}
+
+/* ---------- Avatar: circle to crescent moon, with a boy fishing ---------- */
+.moon-scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.moon-scene .stop-a { stop-color: var(--accent-soft); }
+.moon-scene .stop-b { stop-color: var(--bg-soft); }
+
+.moon-scene .disc {
+  fill: url(#avatar-fill);
+  stroke: var(--border);
+  opacity: calc(1 - var(--moon, 0));
+}
+
+.moon-scene .moon-lit {
+  opacity: var(--moon, 0);
+}
+
+.moon-scene .moon-face {
+  fill: var(--silver);
+  stroke: var(--silver-edge);
+  stroke-width: 1.5;
+}
+
+.moon-scene .moon-edge {
+  fill: none;
+  stroke: var(--silver-edge);
+  stroke-width: 1.5;
+}
+
+/* Scroll sets --moon and --boy from 0 to 1 (see script).
+   The shadow sweeps across like a moon phase, starting parked off the disc */
+.moon-scene .bite {
+  transform: translate(calc(-100px * (1 - var(--moon, 0))), calc(-70px * (1 - var(--moon, 0))));
+}
+
+.moon-scene .boy {
+  fill: none;
+  stroke: var(--accent-strong);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: var(--boy, 0);
+  transform: translateY(calc(-16px * (1 - var(--boy, 0))));
+}
+
+.moon-scene .solid { fill: var(--accent-strong); stroke: none; }
+.moon-scene .rod { stroke-width: 2; }
+.moon-scene .reel { stroke-width: 1.4; }
+.moon-scene .reel-handle {
+  stroke-width: 1.2;
+  transform-box: view-box;
+  transform-origin: 68px 90px;
+}
+
+.moon-scene .fishing-line,
+.moon-scene .hook {
+  fill: none;
+  stroke: var(--silver-edge);
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0;
 }
 
 .about-grid p {
@@ -377,6 +476,126 @@ a:hover {
   border-top: 1px solid var(--border);
 }
 
+/* ---------- Moon phase logo ---------- */
+.phase {
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: var(--silver);
+  stroke: var(--silver-edge);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.phase .phase-dark {
+  fill: transparent;
+}
+
+/* ---------- Hero sky ---------- */
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Silver stars with a crisp outline */
+.sky svg {
+  display: block;
+  fill: var(--silver);
+  stroke: var(--silver-edge);
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+/* Stars that fall as the page scrolls (positioned by script) */
+.falling-star {
+  position: absolute;
+  top: 0;
+  width: var(--size, 14px);
+  height: var(--size, 14px);
+  will-change: transform;
+}
+
+.falling-star svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}
+
+/* Shooting stars */
+.shooting-star {
+  position: absolute;
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--silver-edge), transparent);
+  transform-origin: left center;
+  opacity: 0;
+  animation: shoot 1.4s ease-out forwards;
+}
+
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--silver);
+  border: 2px solid var(--silver-edge);
+}
+
+@keyframes shoot {
+  0%   { transform: rotate(-25deg) translateX(0) scaleX(0.3); opacity: 0; }
+  15%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: rotate(-25deg) translateX(-520px) scaleX(1); opacity: 0; }
+}
+
+/* ---------- Projects crayon stars ---------- */
+/* Above the sections below it, so the fishing line draws over Projects as it's reeled up */
+#about {
+  position: relative;
+  z-index: 2;
+}
+
+#projects {
+  position: relative;
+}
+
+/* A cluster in each margin, centered on the section (positioned by script) */
+.crayon-stars {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.crayon-star {
+  position: absolute;
+  overflow: visible;
+  filter: url(#crayon);
+}
+
+.crayon-star path {
+  fill: none;
+  stroke: var(--crayon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.crayon-star path + path {
+  opacity: 0.7;
+}
+
+@media (min-width: 1200px) {
+  .crayon-stars { display: block; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 640px) {
   .nav-links {
@@ -387,8 +606,17 @@ a:hover {
     font-size: 0.85rem;
   }
 
+  .moon-logo {
+    gap: 3px;
+  }
+
+  .moon-logo .phase {
+    width: 15px;
+    height: 15px;
+  }
+
   .hero {
-    padding-top: 72px;
+    padding-top: 32px;
     padding-bottom: 48px;
   }
 
@@ -397,14 +625,32 @@ a:hover {
     gap: 24px;
   }
 
+  /* Phones: photo on the left, name stacked on the right, centered as a pair; intro below */
+  .hero-inner {
+    --photo-h: min(360px, 90vw);
+    grid-template-columns: auto auto;
+    justify-content: center;
+    padding: 0 16px;
+  }
+
+  .hero-text {
+    display: contents;
+  }
+
+  .hero .hero-text h1 { margin: 0 0 0 calc(var(--photo-h) * -0.06); font-size: 15vw; }
+  .hero-text .lead,
+  .hero-actions { grid-column: 1 / -1; justify-self: center; text-align: center; }
+  .hero-text .lead { margin: 24px 0; }
+  .hero-actions { justify-content: center; }
+
   .avatar {
     width: 112px;
     height: 112px;
-    font-size: 1.8rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
+  .shooting-star { display: none; }
 }

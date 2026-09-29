@@ -11,9 +11,31 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+    <symbol id="sparkle" viewBox="0 0 24 24">
+      <path d="M12 1 L14.5 9.5 L23 12 L14.5 14.5 L12 23 L9.5 14.5 L1 12 L9.5 9.5 Z" />
+    </symbol>
+    <symbol id="star" viewBox="0 0 24 24">
+      <path d="M12 1.5 L15.1 8.1 L22.3 9 L17 14 L18.4 21.1 L12 17.6 L5.6 21.1 L7 14 L1.7 9 L8.9 8.1 Z" />
+    </symbol>
+    <!-- Waxy crayon texture: grainy gaps in the stroke plus slightly rough edges -->
+    <!-- <filter id="crayon" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="3" seed="4" result="grain" />
+      <feColorMatrix in="grain" type="matrix" result="grainAlpha"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3 0 0 0 -0.9" />
+      <feComposite in="SourceGraphic" in2="grainAlpha" operator="in" result="textured" />
+      <feDisplacementMap in="textured" in2="grain" scale="3" xChannelSelector="R" yChannelSelector="G" />
+    </filter> -->
+  </svg>
+
   <header class="site-header">
     <nav class="nav container">
-      <a href="#top" class="logo">Emily Hur.</a>
+      <a href="#top" class="moon-logo" aria-label="Emily Hur, back to top" title="Emily Hur">
+        <svg class="phase" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" class="phase-dark" /><path d="M12 2 A10 10 0 0 1 12 22 A5 10 0 0 0 12 2 Z" /></svg>
+        <svg class="phase" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" class="phase-dark" /><path d="M12 2 A10 10 0 0 1 12 22 Z" /></svg>
+        <svg class="phase" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" class="phase-dark" /><path d="M12 2 A10 10 0 0 1 12 22 A5 10 0 0 1 12 2 Z" /></svg>
+        <svg class="phase" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" class="phase-dark" /><circle cx="12" cy="12" r="10" /></svg>
+      </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -25,16 +47,22 @@
 
   <main id="top">
     <!-- Hero -->
-    <section class="hero container">
-      <p class="eyebrow">Hello, I'm</p>
-      <h1>Emily Hur</h1>
-      <p class="lead">
-        I'm a Computer Science and Mathematics major at Cornell University 
-        with a passion for full-stack development and robotics!
-      </p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">See my work</a>
-        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    <section class="hero">
+      <div class="sky" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <img class="hero-photo" src="images/emily.png" alt="Emily smiling and holding a small duck-shaped night light" width="603" height="1000">
+        <div class="hero-text">
+          <!-- <p class="eyebrow">Hello, I'm</p> -->
+          <h1><span>EMILY</span> <span>HUR</span></h1>
+          <p class="lead">
+            I'm a Computer Science and Mathematics major at Cornell University 
+            with a passion for full-stack development and robotics!
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">See my work</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -42,21 +70,62 @@
     <section id="about" class="section container">
       <h2>About</h2>
       <div class="about-grid">
-        <div class="avatar" aria-hidden="true">Emily Hur</div>
+        <div class="avatar" aria-hidden="true">
+          <!-- Starts as a plain circle; scrolling past About turns it into a crescent with a boy fishing from it -->
+          <svg class="moon-scene" viewBox="0 0 160 160">
+            <defs>
+              <linearGradient id="avatar-fill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" class="stop-a" />
+                <stop offset="1" class="stop-b" />
+              </linearGradient>
+              <mask id="moon-bite" maskUnits="userSpaceOnUse" x="-20" y="-20" width="200" height="200">
+                <rect x="-20" y="-20" width="200" height="200" fill="#fff" />
+                <circle class="bite" cx="40.3" cy="60.1" r="67.1" fill="#000" />
+              </mask>
+              <clipPath id="moon-disc"><circle cx="80" cy="80" r="79.5" /></clipPath>
+            </defs>
+            <circle class="disc" cx="80" cy="80" r="79.5" mask="url(#moon-bite)" />
+            <!-- Crescent opening to the left, thick along the right, like the DreamWorks moon; same circle as the avatar so the outlines line up -->
+            <g class="moon-lit">
+              <circle class="moon-face" cx="80" cy="80" r="79.5" mask="url(#moon-bite)" />
+              <g clip-path="url(#moon-disc)"><circle class="bite moon-edge" cx="40.3" cy="60.1" r="67.1" /></g>
+            </g>
+            <!-- Boy sitting in the hollow, back to the moon, knees up, one leg dangling over the edge -->
+            <g transform="translate(-24.8 3.7) scale(1.12)">
+            <g class="boy">
+              <path class="rod" d="M70 96 Q48 36 28 20" />
+              <line x1="84" y1="107" x2="67" y2="116" stroke-width="7" />
+              <line x1="67" y1="116" x2="58" y2="138" stroke-width="5.5" />
+              <line x1="58" y1="139" x2="51" y2="141" stroke-width="4" />
+              <path class="solid" d="M79 71 Q91 65 99 74 Q103 92 99 106 Q87 113 75 106 Q73 88 79 71 Z" />
+              <line x1="84" y1="104" x2="62" y2="79" stroke-width="10" />
+              <line x1="62" y1="79" x2="56" y2="104" stroke-width="6" />
+              <line x1="56" y1="105" x2="48" y2="107" stroke-width="4" />
+              <polyline points="87,78 77,95 64,85" stroke-width="5" />
+              <line x1="86" y1="64" x2="88" y2="72" stroke-width="5" />
+              <circle class="solid" cx="86" cy="59" r="8.5" />
+              <circle class="solid" cx="78" cy="61" r="2" />
+              <path class="solid" d="M78 56 Q80 47 89 49 Q97 51 95 60 Q92 54 86 55 Q82 53 78 56 Z" />
+              <circle class="reel" cx="68" cy="90" r="3" />
+              <line class="reel-handle" x1="68" y1="90" x2="68" y2="86" />
+            </g>
+            </g>
+            <line class="fishing-line" x1="6.6" y1="26.1" x2="6.6" y2="26.1" />
+            <path class="hook" d="M0 -5 V1.5 A2.5 2.5 0 0 1 -5 1.5" />
+          </svg>
+        </div>
         <div>
           <p>
-            Write a few sentences about yourself here. Where you're based, what you're
-            working on, and what brings you joy outside of work.
-          </p>
-          <p>
-            Add a second paragraph with a bit more detail — your background, your
-            interests, or what you're currently learning.
+            When I'm not developing applications for autonomous flight, 
+            teaching Cornell's OOP and Data Structures course, or 
+            working on ML research for 3D modeling the aorta, you can find me 
+            reading a good book, practicing tae kwon do, or playing Crossy Road.
           </p>
           <ul class="tags">
-            <li>Skill one</li>
-            <li>Skill two</li>
-            <li>Skill three</li>
-            <li>Skill four</li>
+            <li>Java</li>
+            <li>Python</li>
+            <li>C</li>
+            <li>Typescript</li>
           </ul>
         </div>
       </div>
@@ -64,22 +133,23 @@
 
     <!-- Projects -->
     <section id="projects" class="section container">
+      <div class="crayon-stars" aria-hidden="true"></div>
       <h2>Projects</h2>
       <div class="cards">
         <article class="card">
-          <h3>Project One</h3>
-          <p>A one- or two-sentence description of the project and what problem it solves.</p>
-          <a href="#" class="card-link">View project →</a>
+          <h3>Plane Parent</h3>
+          <p>Interface with an autonomous aircraft for displaying/ graphing telemetry and catching potential issues.</p>
+          <!-- <a href="#" class="card-link">View project →</a> -->
         </article>
         <article class="card">
-          <h3>Project Two</h3>
-          <p>A one- or two-sentence description of the project and what problem it solves.</p>
-          <a href="#" class="card-link">View project →</a>
+          <h3>Aorta 3D Modeling</h3>
+          <p>Python script for producing a 3D mesh of an aorta by exploring centerlines through the blood vessel tree.</p>
+          <!-- <a href="#" class="card-link">View project →</a> -->
         </article>
         <article class="card">
-          <h3>Project Three</h3>
-          <p>A one- or two-sentence description of the project and what problem it solves.</p>
-          <a href="#" class="card-link">View project →</a>
+          <h3>Code Walkthroughs</h3>
+          <p>Youtube series for explaining discussion exercises for Cornell's CS 2110 Data Structures course.</p>
+          <!-- <a href="#" class="card-link">View project →</a> -->
         </article>
       </div>
     </section>
@@ -89,19 +159,22 @@
       <h2>Experience</h2>
       <ol class="timeline">
         <li>
-          <span class="when">2024 — Present</span>
-          <h3>Role Title · Company</h3>
-          <p>A brief summary of what you do and the impact you've had.</p>
+          <span class="when"> Nov. 2025 — Present</span>
+          <h3>Autopilot Software Developer · Cornell Unmanned Air Systems (CUAir)</h3>
+          <p>Optimize autonomous trajectories using flight simulation by maintaining a ground control station web application
+            • Design automatic VTOL transition and acceleration capabilities required for target positioning and path planning</p>
         </li>
         <li>
-          <span class="when">2022 — 2024</span>
-          <h3>Role Title · Company</h3>
-          <p>A brief summary of what you did and the impact you had.</p>
+          <span class="when">Sept. 2026 — Present</span>
+          <h3>Research Assistant · Computational Mechanics & Scientific AI Lab (CoMSAIL)</h3>
+          <p>Develop a diffusion-based framework to build 3D meshes of aortas from CT volumes for CFD simulation 
+            • Optimize the reconstruction pipeline for 3D hemodynamic modeling and analysis</p>
         </li>
         <li>
-          <span class="when">2018 — 2022</span>
-          <h3>Degree · University</h3>
-          <p>Focus areas, honors, or anything worth highlighting.</p>
+          <span class="when">Jan. 2026 — Present</span>
+          <h3>Teaching Assistant · Cornell University</h3>
+          <p>Provide instruction and feedback for a core Object-Oriented Programming and Data Structures (Java) course
+            • Lead discussion sections and office hours on topics such as graphs, recursion, binary trees, and sorting algorithms</p>
         </li>
       </ol>
     </section>
@@ -111,11 +184,11 @@
       <h2>Let's connect</h2>
       <p>I'm always happy to chat. The best way to reach me is by email.</p>
       <a href="mailto:ejyhur@gmail.com" class="btn btn-primary">ejyhur@gmail.com</a>
-      <ul class="socials">
-        <li><a href="#">GitHub</a></li>
+      <!-- <ul class="socials"> -->
+        <!-- <li><a href="#">GitHub</a></li>
         <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">Instagram</a></li>
-      </ul>
+        <li><a href="#">Instagram</a></li> -->
+      <!-- </ul> -->
     </section>
   </main>
 
@@ -125,6 +198,256 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const svgNS = 'http://www.w3.org/2000/svg';
+
+    // Hero sky: stars that fall as you scroll, plus the occasional shooting star
+    (function () {
+      const sky = document.querySelector('.sky');
+      const small = window.matchMedia('(max-width: 640px)').matches;
+
+      const stars = [];
+      for (let i = 0; i < (small ? 12 : 24); i++) {
+        const el = document.createElement('span');
+        el.className = 'falling-star';
+        const size = rand(8, 20);
+        el.style.left = rand(0, 100) + '%';
+        el.style.setProperty('--size', size + 'px');
+        const svg = document.createElementNS(svgNS, 'svg');
+        const use = document.createElementNS(svgNS, 'use');
+        use.setAttribute('href', i % 3 === 0 ? '#star' : '#sparkle');
+        svg.appendChild(use);
+        el.appendChild(svg);
+        sky.appendChild(el);
+        // Bigger stars fall faster, like they're closer
+        stars.push({ el, y: rand(0, 1), speed: 0.15 + size / 40, spin: rand(-0.4, 0.4) });
+      }
+
+      function place() {
+        const h = sky.offsetHeight + 40;
+        const scroll = reduceMotion ? 0 : window.scrollY;
+        stars.forEach(({ el, y, speed, spin }) => {
+          const top = ((y * h + scroll * speed) % h) - 20;
+          el.style.transform = `translateY(${top}px) rotate(${scroll * spin}deg)`;
+        });
+      }
+
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { place(); ticking = false; });
+      }
+      place();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+
+      if (reduceMotion) return;
+
+      function shoot() {
+        if (!document.hidden && sky.getBoundingClientRect().bottom > 0) {
+          const star = document.createElement('span');
+          star.className = 'shooting-star';
+          star.style.top = rand(0, 45) + '%';
+          star.style.left = rand(35, 100) + '%';
+          star.addEventListener('animationend', () => star.remove());
+          sky.appendChild(star);
+        }
+        setTimeout(shoot, rand(2500, 6000));
+      }
+      setTimeout(shoot, 1200);
+    })();
+
+    // Projects margins: small clusters of crayon stars that draw themselves in as you scroll
+    (function () {
+      // Points of a five-pointed star in drawing order, as a hand-drawn one-stroke star
+      function starPath(jitter) {
+        const pts = [0, 2, 4, 1, 3].map(k => {
+          const a = (-90 + 72 * k) * Math.PI / 180;
+          return [50 + 40 * Math.cos(a) + rand(-jitter, jitter), 52 + 40 * Math.sin(a) + rand(-jitter, jitter)];
+        });
+        // Overshoot past the start a little, like a real crayon stroke
+        const [x0, y0] = pts[0], [x1, y1] = pts[1];
+        pts.push([x0 + (x1 - x0) * 0.08, y0 + (y1 - y0) * 0.08]);
+        return 'M' + pts.map(p => p.map(n => n.toFixed(1)).join(' ')).join(' L');
+      }
+
+      // Scatter three stars of different sizes, biggest first, never overlapping.
+      // x is the offset from the section's edge (negative is out in the page margin); y is from its vertical middle.
+      function cluster() {
+        const placed = [];
+        [72, 42, 26].forEach(size => {
+          for (let tries = 0; tries < 200; tries++) {
+            const x = rand(-140 + size / 2, -20 - size / 2);
+            const y = rand(-80 + size / 2, 80 - size / 2);
+            if (placed.some(p => Math.hypot(p.x - x, p.y - y) < (p.size + size) / 2 * 1.05)) continue;
+            placed.push({ x, y, size });
+            return;
+          }
+        });
+        return placed;
+      }
+
+      const layer = document.querySelector('.crayon-stars');
+      const drawn = [];
+      // One cluster in each margin, centered vertically on the section
+      ['left', 'right'].forEach(side => {
+        cluster().forEach(({ x, y, size }) => {
+          const svg = document.createElementNS(svgNS, 'svg');
+          svg.setAttribute('viewBox', '0 0 100 100');
+          svg.classList.add('crayon-star');
+          svg.style[side] = x - size / 2 + 'px';
+          svg.style.top = `calc(50% + ${y - size / 2}px)`;
+          svg.style.width = svg.style.height = size + 'px';
+          svg.style.transform = `rotate(${rand(-25, 25)}deg)`;
+          // Two passes of the crayon, the second slightly off from the first;
+          // widths are in viewBox units, so divide by size to keep the crayon the same thickness on every star
+          [[3, 3.6, 0], [5, 1.8, 0.35]].forEach(([jitter, width, delay]) => {
+            const path = document.createElementNS(svgNS, 'path');
+            path.setAttribute('d', starPath(jitter));
+            path.setAttribute('pathLength', '1');
+            path.style.strokeWidth = width * 100 / size;
+            svg.appendChild(path);
+            drawn.push({ path, svg, delay });
+          });
+          layer.appendChild(svg);
+        });
+      });
+
+      function draw() {
+        const vh = window.innerHeight;
+        drawn.forEach(({ path, svg, delay }) => {
+          const top = svg.getBoundingClientRect().top;
+          // 0 when the star enters the bottom of the screen, 1 by the time it reaches 45% up
+          let p = reduceMotion ? 1 : (vh - top) / (vh * 0.55);
+          p = Math.min(1, Math.max(0, (p - delay) / (1 - delay)));
+          path.style.strokeDashoffset = 1 - p;
+        });
+      }
+
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { draw(); ticking = false; });
+      }
+      draw();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+    })();
+
+    // End of About, in step with scrolling. Projects is held just out of sight while the avatar becomes
+    // a crescent moon and a boy lands on it. Then the hero and About freeze in place, and further scrolling
+    // only lets him cast onto the Projects heading and reel the section up to where it normally sits.
+    // After that the page scrolls normally. Scrolling back up plays it all in reverse.
+    (function () {
+      const about = document.getElementById('about');
+      const avatar = about.querySelector('.avatar');
+      const svg = avatar.querySelector('.moon-scene');
+      const line = svg.querySelector('.fishing-line');
+      const hook = svg.querySelector('.hook');
+      const handle = svg.querySelector('.reel-handle');
+      const heading = document.querySelector('#projects h2');
+      const header = document.querySelector('.site-header');
+      const TIP = [6.6, 26.1]; // rod tip in the SVG's 160-unit box, out past the moon's open side
+
+      if (reduceMotion) {
+        avatar.style.setProperty('--moon', 1);
+        avatar.style.setProperty('--boy', 1);
+        return;
+      }
+
+      // Everything up to About freezes during the reel; everything after it gets reeled up
+      const sections = [...document.querySelector('main').children];
+      const frozen = sections.slice(0, sections.indexOf(about) + 1);
+      const reeled = [...sections.slice(sections.indexOf(about) + 1), document.querySelector('.site-footer')];
+
+      const clamp01 = t => Math.min(1, Math.max(0, t));
+      const smooth = t => t * t * (3 - 2 * t);
+      // 0..1 progress of scroll position s through [from, from + length]
+      const span = (s, from, length) => clamp01((s - from) / length);
+
+      // Page positions in the natural layout, measured with nothing shifted
+      let geo;
+      function measure() {
+        [...frozen, ...reeled].forEach(el => { el.style.transform = ''; });
+        document.body.style.paddingBottom = '';
+        const vh = window.innerHeight;
+        const box = svg.getBoundingClientRect();
+        const k = box.width / 160;
+        const avatarTop = box.top + window.scrollY;
+        const hookY = heading.getBoundingClientRect().top + window.scrollY + 8;
+        // Freeze with the heading's normal spot three quarters down the screen, but keep the avatar below the header
+        const freeze = Math.min(hookY - vh * 0.75, avatarTop - header.offsetHeight - 8);
+        // How far below its normal spot the heading must be held to stay off-screen
+        const hidden = vh + 30 - (hookY - freeze);
+        const reel = Math.max(300, hidden);
+        geo = {
+          k, vh, hookY, hidden, freeze,
+          tipY: avatarTop + TIP[1] * k,
+          moon: freeze - 300,          // circle sweeps into a crescent
+          boy: freeze - 150,           // boy drops onto the moon
+          cast: freeze,                // page stops; line falls to the hidden heading
+          reel: freeze + 120,          // each bit of scrolling reels Projects up
+          unhook: freeze + 120 + reel, // it's in place; line springs back
+          runway: 120 + reel + 60      // extra scroll the page gains for all this
+        };
+        document.body.style.paddingBottom = geo.runway + 'px';
+      }
+
+      function render() {
+        const s = window.scrollY;
+        const g = geo;
+        avatar.style.setProperty('--moon', smooth(span(s, g.moon, 150)));
+        avatar.style.setProperty('--boy', smooth(span(s, g.boy, 120)));
+
+        // Frozen part: moves down exactly as fast as the page scrolls during the runway
+        const hold = Math.min(g.runway, Math.max(0, s - g.freeze));
+        // Before the freeze, push Projects just enough to keep it out of view; during the reel, let it rise
+        const approach = Math.max(0, g.vh + 30 - (g.hookY - s));
+        const reeled01 = span(s, g.reel, g.unhook - g.reel);
+        const push = s < g.freeze ? Math.min(approach, g.hidden) : g.hidden * (1 - smooth(reeled01));
+        frozen.forEach(el => { el.style.transform = hold ? `translateY(${hold}px)` : ''; });
+        reeled.forEach(el => { el.style.transform = hold + push ? `translateY(${hold + push}px)` : ''; });
+        handle.style.transform = `rotate(${reeled01 * 1440}deg)`;
+
+        // Line length in SVG units: drops during the cast, shortens while reeling, springs back when unhooked
+        const full = (g.hookY + push - g.tipY) / g.k;
+        const cast = span(s, g.cast, 120);
+        const out = full * cast * cast * (1 - span(s, g.unhook, 60));
+        line.setAttribute('y2', TIP[1] + out);
+        hook.setAttribute('transform', `translate(${TIP[0]} ${TIP[1] + out})`);
+        line.style.opacity = hook.style.opacity = out > 1 ? 1 : 0;
+      }
+
+      let ticking = false;
+      function update() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { render(); ticking = false; });
+      }
+      function remeasure() {
+        measure();
+        render();
+      }
+      remeasure();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', remeasure);
+      // Web fonts change the heading's position once they load
+      document.fonts.ready.then(remeasure);
+
+      // Nav links: sections after About sit lower by the runway once it's been scrolled through
+      document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target || !reeled.includes(target)) return;
+        e.preventDefault();
+        const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+        const naturalTop = target.getBoundingClientRect().top + window.scrollY - parseFloat(target.style.transform.slice(11) || 0);
+        window.scrollTo({ top: naturalTop + geo.runway - padding, behavior: 'smooth' });
+      }));
+    })();
   </script>
 </body>
 </html>
